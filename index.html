@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Effet d'image et son</title>
+    <style>
+        body {
+            margin: 0;
+            overflow: hidden; /* Evite que l'image dépasse de l'écran */
+        }
+
+        .button {
+            padding: 100px 200px; /* Agrandir la taille du bouton */
+            font-size: 160px; /* Agrandir le texte du bouton */
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            cursor: pointer;
+            border-radius: 10px; /* Un peu plus d'arrondi */
+            position: relative; /* Nécessaire pour positionner l'image relative à ce bouton */
+        }
+
+        .image {
+            width: 500px; /* Taille de l'image */
+            height: 1000px; /* Taille de l'image */
+            background-size: cover;
+            position: absolute;
+            top: -380px; /* Placer l'image juste au-dessus du bouton */
+            left: 0%; /* Centrer l'image horizontalement */
+            transform: translateX(-10%); /* Correction pour un centrage parfait */
+            animation: apparaître 3s forwards;
+        }
+
+        @keyframes apparaître {
+            0% {
+                opacity: 0;
+                transform: scale(1); /* Commence petit pour ne pas déborder */
+            }
+            100% {
+                opacity: 1;
+                transform: scale(1); /* Augmente progressivement pour s'afficher complètement */
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <button class="button" onclick="afficherImageEtSon()">Clique.. et desolé j'ai changer d'avis</button>
+
+    <script>
+        // Fonction pour afficher l'image et jouer le son
+        function afficherImageEtSon() {
+            console.log("L'image a été affichée et le son joué !");
+            
+            // Créer une nouvelle image
+            const image = document.createElement('div');
+            image.classList.add('image');
+            image.style.backgroundImage = "url('image.jpg')"; // Lien vers l'image
+
+            // Positionner l'image juste au-dessus du bouton, centrée
+            image.style.left = `${Math.random() * window.innerWidth}px`;
+            image.style.top = `${Math.random() * (window.innerHeight - 200)}px`; // Ajuster pour éviter la sortie de l'écran
+
+            // Ajouter l'image sur la page
+            document.body.appendChild(image);
+
+            // Jouer le son pendant 20 secondes
+            const audio = new Audio('son.mp3'); // Remplace 'son.mp3' par ton fichier audio
+            audio.play();
+
+            // Faire en sorte que le son dure 20 secondes
+            setTimeout(() => {
+                audio.pause(); // Arrêter le son après 20 secondes (ou laisse-le jouer si tu veux)
+                audio.currentTime = 0; // Réinitialiser la lecture du son
+            }, 20000); // 20000 millisecondes = 20 secondes
+        }
+    </script>
+
+</body>
+</html>
